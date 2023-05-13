@@ -17,20 +17,20 @@ class DatabaseHelper {
 static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE items(
         id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-        title TEXT,
+        name TEXT,
         description TEXT,
         createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
       )
       """);
   }
 // id: the id of a item
-// title, description: name and description of  activity
+// name, description: name and description of  activity
 // created_at: the time that the item was created. It will be automatically handled by SQLite
   // Create new item 
-  static Future<int> createItem(String? title, String? descrption) async {
+  static Future<int> createItem(String? name, String? descrption) async {
     final db = await DatabaseHelper.db();
 
-    final data = {'title': title, 'description': descrption};
+    final data = {'name': name, 'description': descrption};
     final id = await db.insert('items', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
@@ -56,11 +56,11 @@ static Future<void> createTables(sql.Database database) async {
 
   // Update an item by id
   static Future<int> updateItem(
-      int id, String title, String? descrption) async {
+      int id, String name, String? descrption) async {
     final db = await DatabaseHelper.db();
 
     final data = {
-      'title': title,
+      'name': name,
       'description': descrption,
       'createdAt': DateTime.now().toString()
     };
