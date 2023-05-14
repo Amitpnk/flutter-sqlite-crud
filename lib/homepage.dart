@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     _refreshData(); // Loading the data when the app starts
   }
 
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
   // This function will be triggered when the floating button is pressed
@@ -39,10 +39,10 @@ class _HomePageState extends State<HomePage> {
       // id != null -> update an existing item
     if (id != null) {      
       final existingData = myData.firstWhere((element) => element['id'] == id);
-      _nameController.text = existingData['name'];
+      _titleController.text = existingData['title'];
       _descriptionController.text = existingData['description'];
     } else {
-      _nameController.text = "";
+      _titleController.text = "";
       _descriptionController.text = "";
     }
 
@@ -66,9 +66,9 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextFormField(
-                    controller: _nameController,
+                    controller: _titleController,
                     validator: formValidator,
-                    decoration: const InputDecoration(hintText: 'Student Name'),
+                    decoration: const InputDecoration(hintText: 'Title'),
                   ),
                   const SizedBox(
                     height: 10,
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                   TextFormField(
                     validator: formValidator,
                     controller: _descriptionController,
-                    decoration: const InputDecoration(hintText: 'Student Id'),
+                    decoration: const InputDecoration(hintText: 'Description'),
                   ),
                   const SizedBox(
                     height: 20,
@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
 
                             // Clear the text fields
                             setState(() {
-                              _nameController.text = '';
+                              _titleController.text = '';
                               _descriptionController.text = '';
                             });
 
@@ -132,14 +132,14 @@ class _HomePageState extends State<HomePage> {
 // Insert a new data to the database
   Future<void> addItem() async {
     await DatabaseHelper.createItem(
-        _nameController.text, _descriptionController.text);
+        _titleController.text, _descriptionController.text);
     _refreshData();
   }
 
   // Update an existing data
   Future<void> updateItem(int id) async {
     await DatabaseHelper.updateItem(
-        id, _nameController.text, _descriptionController.text);
+        id, _titleController.text, _descriptionController.text);
     _refreshData();
   }
 
@@ -155,7 +155,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter SQLite Demo'),
+        title: const Text('Sqllite CRUD'),
       ),
       body: _isLoading
           ? const Center(
@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                     color: index % 2 == 0 ? Colors.green : Colors.green[200],
                     margin: const EdgeInsets.all(15),
                     child: ListTile(
-                        title: Text(myData[index]['name']),
+                        title: Text(myData[index]['title']),
                         subtitle: Text(myData[index]['description']),
                         trailing: SizedBox(
                           width: 100,
