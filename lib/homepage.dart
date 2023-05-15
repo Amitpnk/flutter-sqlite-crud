@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   TextFormField(
                     controller: _titleController,
                     validator: formValidator,
-                    decoration: const InputDecoration(hintText: 'Title'),
+                    decoration: const InputDecoration(hintText: 'Student Name'),
                   ),
                   const SizedBox(
                     height: 10,
@@ -155,7 +155,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sqllite CRUD'),
+        title: const Text('Flutter Sqllite CRUD'),
       ),
       body: _isLoading
           ? const Center(
